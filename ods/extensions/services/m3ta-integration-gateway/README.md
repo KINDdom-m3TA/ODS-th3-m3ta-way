@@ -11,6 +11,10 @@ probes using Plane's supported `X-API-Key` authentication. Webhook signature
 verification is available, but webhook ingestion and event delivery remain
 disabled until a live Plane workspace is verified.
 
+Plane Cloud uses `PLANE_BASE_URL=https://api.plane.so`. For a self-hosted
+deployment, replace that value with the instance root URL; the adapter appends
+the versioned `/api/v1/...` paths itself.
+
 ## Initial platform surfaces
 
 - Plane: authoritative work ledger
