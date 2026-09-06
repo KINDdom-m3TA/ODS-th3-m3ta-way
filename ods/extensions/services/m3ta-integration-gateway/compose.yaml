@@ -11,6 +11,10 @@ services:
       - M3TA_GATEWAY_CONFIG_DIR=/config
       - M3TA_GATEWAY_DATA_DIR=/data/m3ta-integration-gateway
       - M3TA_GATEWAY_LOG_LEVEL=${M3TA_GATEWAY_LOG_LEVEL:-INFO}
+      - PLANE_BASE_URL=${PLANE_BASE_URL:-https://api.plane.so}
+      - PLANE_WORKSPACE_SLUG=${PLANE_WORKSPACE_SLUG:-}
+      - PLANE_API_KEY=${PLANE_API_KEY:-}
+      - PLANE_WEBHOOK_SECRET=${PLANE_WEBHOOK_SECRET:-}
     volumes:
       - ./extensions/services/m3ta-integration-gateway/config:/config:ro,z
       - ./data/m3ta-integration-gateway:/data/m3ta-integration-gateway:z

@@ -17,7 +17,7 @@ platforms:
     authority: projects-and-work-items
     mode: mcp-api-webhook
     write_enabled: false
-    configuration_required: [PLANE_BASE_URL, PLANE_WORKSPACE_SLUG, PLANE_TOKEN_REF]
+    configuration_required: [PLANE_BASE_URL, PLANE_WORKSPACE_SLUG, PLANE_API_KEY]
   open_notebook:
     role: research-intelligence
     authority: notebooks-sources-research-notes

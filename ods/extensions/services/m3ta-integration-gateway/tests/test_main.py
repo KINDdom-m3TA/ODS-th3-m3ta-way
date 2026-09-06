@@ -70,3 +70,13 @@ def test_unknown_origin_is_rejected():
         },
     )
     assert response.status_code == 422
+
+
+def test_plane_health_reports_missing_configuration(monkeypatch):
+    monkeypatch.delenv("PLANE_WORKSPACE_SLUG", raising=False)
+    monkeypatch.delenv("PLANE_API_KEY", raising=False)
+    response = client.get("/v1/adapters/plane/health")
+    assert response.status_code == 200
+    assert response.json()["status"] == "unconfigured"
+    assert "PLANE_WORKSPACE_SLUG" in response.json()["missing"]
+    assert response.json()["write_enabled"] is False

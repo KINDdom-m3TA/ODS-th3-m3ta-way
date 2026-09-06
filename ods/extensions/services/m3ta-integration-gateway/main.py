@@ -12,6 +12,8 @@ import yaml
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
+from adapters.plane import PlaneAPIError, PlaneClient, PlaneConfigurationError, PlaneSettings
+
 CONFIG_DIR = Path(os.getenv("M3TA_GATEWAY_CONFIG_DIR", Path(__file__).parent / "config"))
 
 
@@ -105,6 +107,27 @@ def readiness() -> dict[str, Any]:
             for key, item in platforms.items()
         },
     }
+
+
+@app.get("/v1/adapters/plane/health")
+def plane_health() -> dict[str, Any]:
+    settings = PlaneSettings.from_environment()
+    missing = settings.missing()
+    if missing:
+        return {
+            "status": "unconfigured",
+            "authenticated": False,
+            "missing": missing,
+            "write_enabled": False,
+        }
+    try:
+        client = PlaneClient(settings)
+        try:
+            return client.probe()
+        finally:
+            client.close()
+    except (PlaneConfigurationError, PlaneAPIError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 @app.post("/v1/events/validate")

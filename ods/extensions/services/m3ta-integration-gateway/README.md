@@ -6,6 +6,11 @@ Phase 1 is intentionally validation-only. All external writes are disabled until
 the corresponding live endpoint, secret reference, permissions, and health probe
 have been verified.
 
+The Plane adapter currently performs read-only current-user and project-list
+probes using Plane's supported `X-API-Key` authentication. Webhook signature
+verification is available, but webhook ingestion and event delivery remain
+disabled until a live Plane workspace is verified.
+
 ## Initial platform surfaces
 
 - Plane: authoritative work ledger
